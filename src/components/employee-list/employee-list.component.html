@@ -1,0 +1,98 @@
+<div class="page">
+
+    <mat-card class="employee-card">
+
+        <div class="toolbar">
+
+            <div class="title">
+                <h2>Employees</h2>
+                <span>{{dataSource.data.length}} Employees</span>
+            </div>
+
+            <div class="toolbar-actions">
+
+                <mat-form-field appearance="outline" class="search">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput placeholder="Search employee..." (keyup)="search($event)">
+                </mat-form-field>
+
+                <button mat-flat-button color="primary" routerLink="/employees/add">
+                    <mat-icon>add</mat-icon>
+                    Add Employee
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="table-container">
+
+            <table mat-table [dataSource]="dataSource" matSort class="employee-table">
+
+                <!-- Id -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                    <td mat-cell *matCellDef="let e">{{e.id}}</td>
+                </ng-container>
+
+                <!-- Name -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                    <td mat-cell *matCellDef="let e">{{e.name}}</td>
+                </ng-container>
+
+                <!-- Email -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                    <td mat-cell *matCellDef="let e">{{e.email}}</td>
+                </ng-container>
+
+                <!-- Salary -->
+                <ng-container matColumnDef="salary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary</th>
+                    <td mat-cell *matCellDef="let e">
+                        {{e.salary | currency:'INR'}}
+                    </td>
+                </ng-container>
+
+                <!-- Actions -->
+                <ng-container matColumnDef="actions">
+
+                    <th mat-header-cell *matHeaderCellDef width="120">
+                        Actions
+                    </th>
+
+                    <td mat-cell *matCellDef="let e">
+
+                        <button mat-icon-button color="primary" (click)="edit(e.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+
+                        <button mat-icon-button color="warn" (click)="delete(e.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+
+                    </td>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="5">
+                        No employees found
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10,20,50]" showFirstLastButtons>
+        </mat-paginator>
+
+    </mat-card>
+
+</div>
